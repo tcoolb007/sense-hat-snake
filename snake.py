@@ -1,6 +1,7 @@
 import sense_hat
 import sys
 from time import sleep
+from random import randint
 
 sense = sense_hat.SenseHat()
 
@@ -42,6 +43,7 @@ def update_snake():
     
     path.insert(0,[x,y])
     draw_snake()
+    check_food()
 
 def isValid():
     x = path[0][0]
@@ -71,6 +73,32 @@ def quit_game():
     sense.clear()
     sys.exit()
 
+def check_food():
+    global length
+    if path[0][0] == food_x and path[0][1] == food_y:
+        length += 1
+        assign_food()
+    sense.set_pixel(food_x, food_y, r)
+             
+def assign_food():
+    snake = path[0:length - 1]
+    global food_x
+    global food_y
+
+    deciding = True
+
+    while deciding:
+        food_x = randint(0,7)
+        food_y = randint(0,7)
+
+        for i in range(0, length - 1):
+            if snake[i][0] == food_x and snake[i][1] == food_y:
+                break
+        else:
+            deciding = False
+
+assign_food()
+sense.set_pixel(food_x, food_y, r)
 running = True
 
 while running == True: 
@@ -85,5 +113,5 @@ while running == True:
             elif e.direction == sense_hat.DIRECTION_RIGHT and direct != 2:
                 direct = 0
     update_snake()
-    sleep(1)
+    sleep(0.5)
 
