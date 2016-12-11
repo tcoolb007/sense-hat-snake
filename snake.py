@@ -27,38 +27,41 @@ e,e,e,e,e,e,e,e
 ]
 
 def update_snake():
+    global x
+    global y
     x = path[0][0]
     y = path[0][1]
-    if isValid():
-        if direct == 0:
-            x += 1
-        elif direct == 1:
-            y += 1 
-        elif direct == 2:
-            x -= 1
-        else:
-            y -=  1
+    
+
+    if is_snake():
+        quit_game()
+
+    if direct == 0:
+        x += 1
+    elif direct == 1:
+        y += 1 
+    elif direct == 2:
+        x -= 1
     else:
+        y -= 1
+
+    if is_wall():
         quit_game()
     
     path.insert(0,[x,y])
     draw_snake()
     check_food()
 
-def isValid():
-    x = path[0][0]
-    y = path[0][1]
-
-    if direct == 3 and y == 0:
-        return False
-    elif direct == 2 and x == 0:
-        return False
-    elif direct == 1 and y == 7:
-        return False
-    elif direct == 0 and x == 7:
-        return False
-    else:
+def is_wall():
+    if x > 7 or x < 0 or y > 7 or y < 0:
         return True
+    else:
+        return False
+
+def is_snake():
+    for px, py in path[1:length - 1]:
+        if x == px and y == py:
+            return True
 
 def draw_snake():
     sense.clear() 
@@ -68,8 +71,11 @@ def draw_snake():
 def quit_game():
     sense.set_pixels(game_over)
     running = False
-    sleep(10)
+<<<<<<< HEAD
     print("\nThanks for playing!")
+=======
+>>>>>>> fc4d8a8781b45280a88c268d79c49e5e28fad0d1
+    sleep(10)
     sense.clear()
     sys.exit()
 
