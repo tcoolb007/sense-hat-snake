@@ -71,10 +71,7 @@ def draw_snake():
 def quit_game():
     sense.set_pixels(game_over)
     running = False
-<<<<<<< HEAD
     print("\nThanks for playing!")
-=======
->>>>>>> fc4d8a8781b45280a88c268d79c49e5e28fad0d1
     sleep(10)
     sense.clear()
     sys.exit()
