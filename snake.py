@@ -8,8 +8,8 @@ sense = sense_hat.SenseHat()
 path = [[0,3],[1,3],[2,3]]
 length = 3
 # 0 is right, 1 is down, 2 is left, 3 is up
-
 direct = 0
+framerate = 5
 
 w = (255, 255, 255)
 r = (255,   0,   0)
@@ -116,5 +116,5 @@ while running == True:
             elif e.direction == sense_hat.DIRECTION_RIGHT and direct != 2:
                 direct = 0
     update_snake()
-    sleep(0.5)
+    sleep(1/framerate)
 
