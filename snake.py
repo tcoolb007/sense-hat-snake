@@ -4,6 +4,7 @@ from time import sleep
 from random import randint
 
 sense = sense_hat.SenseHat()
+sense.low_light = True
 
 path = [[0,3],[1,3],[2,3]]
 length = 3
@@ -34,7 +35,7 @@ def update_snake():
     
 
     if is_snake():
-        quit_game()
+        end_game()
 
     if direct == 0:
         x += 1
@@ -46,7 +47,7 @@ def update_snake():
         y -= 1
 
     if is_wall():
-        quit_game()
+        end_game()
     
     path.insert(0,[x,y])
     draw_snake()
@@ -68,13 +69,26 @@ def draw_snake():
     for i in range(0, length): 
         sense.set_pixel(path[i][0],path[i][1], w)
 
-def quit_game():
+def end_game():
     sense.set_pixels(game_over)
     running = False
     print("\nThanks for playing!")
     sleep(10)
     sense.clear()
     sys.exit()
+
+def quit_game():
+    print("Game paused")
+
+    #first event is middle released, two are needed to catch the input
+    event = sense.stick.wait_for_event()
+    event = sense.stick.wait_for_event()
+    if event.action == 'pressed' and event.direction == 'middle':
+        print("Goodbye!")
+        sense.clear()
+        sys.exit()
+    else:
+        print("Game resumed")
 
 def check_food():
     global length
@@ -115,6 +129,8 @@ while running == True:
                 direct = 2
             elif e.direction == sense_hat.DIRECTION_RIGHT and direct != 2:
                 direct = 0
+            elif e.direction == 'middle':
+                quit_game()
     update_snake()
     sleep(1/framerate)
 

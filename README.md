@@ -9,3 +9,4 @@ Download the code and run.
 
 ##Controls
 Use the joytick to move around.
+To pause the game, push the stick down. Once the game is paused, push the stick again to quit the game. Or, press any other directional key to resume. NOTE: this does not change the direction of the snake.
